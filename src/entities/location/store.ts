@@ -4,7 +4,7 @@ interface LocationState {
   lat: number | null;
   lon: number | null;
   city: string;
-  isAuto: boolean; // Флаг: автоматически или вручную
+  isAuto: boolean;
   setLocation: (lat: number, lon: number, city: string, isAuto: boolean) => void;
 }
 
