@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Wind, Gauge, CloudRain } from 'lucide-react';
 import { useTelegram } from '@/shared/hooks/useTelegram';
 import { useLocationStore } from '@/entities/location/store';
+import { useWeatherStore } from '@/entities/weather/store';
 import { FishingEngine, WeatherData } from '@/entities/engine/FishingEngine';
 
 const GlassCard = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => (
@@ -14,10 +15,9 @@ const GlassCard = ({ children, className = '' }: { children: React.ReactNode, cl
 export const Home = () => {
   const { triggerHaptic } = useTelegram();
   const { city, setLocation } = useLocationStore();
+  const { weather, forecast, setWeatherData } = useWeatherStore();
   
   const [isLoading, setIsLoading] = useState(false);
-  const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [forecast, setForecast] = useState<{peaceful: any, predator: any} | null>(null);
 
   const handleScan = () => {
     triggerHaptic('heavy');
@@ -48,12 +48,13 @@ export const Home = () => {
             uvIndex: wData.current.uv_index
           };
 
-          setWeather(wObj);
-          
-          setForecast({
-            peaceful: FishingEngine.calculate(wObj, 'peaceful'),
-            predator: FishingEngine.calculate(wObj, 'predator')
-          });
+          setWeatherData(
+            wObj, 
+            {
+              peaceful: FishingEngine.calculate(wObj, 'peaceful'),
+              predator: FishingEngine.calculate(wObj, 'predator')
+            }
+          );
           
           triggerHaptic('success');
         } catch (e) {
