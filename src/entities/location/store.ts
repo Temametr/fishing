@@ -4,12 +4,14 @@ interface LocationState {
   lat: number | null;
   lon: number | null;
   city: string;
-  setLocation: (lat: number, lon: number, city: string) => void;
+  isAuto: boolean; // Флаг: автоматически или вручную
+  setLocation: (lat: number, lon: number, city: string, isAuto: boolean) => void;
 }
 
 export const useLocationStore = create<LocationState>((set) => ({
   lat: null,
   lon: null,
   city: 'Определяем локацию...',
-  setLocation: (lat, lon, city) => set({ lat, lon, city }),
+  isAuto: true,
+  setLocation: (lat, lon, city, isAuto) => set({ lat, lon, city, isAuto }),
 }));
