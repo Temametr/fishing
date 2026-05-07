@@ -22,7 +22,6 @@ export default function App() {
   const [forecast, setForecast] = useState<{peaceful: any, predator: any} | null>(null);
   const [activeTab, setActiveTab] = useState('home');
 
-
   const handleScan = () => {
     triggerHaptic('heavy');
     setIsLoading(true);
@@ -185,10 +184,6 @@ export default function App() {
           triggerHaptic('light');
         }} 
       />
-    </div>
-  );
-}
-
     </div>
   );
 }
