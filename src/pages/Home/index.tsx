@@ -7,8 +7,12 @@ import { useWeatherStore } from '@/entities/weather/store';
 import { FishingEngine, WeatherData } from '@/entities/engine/FishingEngine';
 import { LocationBottomSheet } from '@/widgets/LocationBottomSheet';
 
-const GlassCard = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => (
-  <div className={`bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-5 shadow-2xl ${className}`}>
+// ВАЖНО: Добавили onClick в интерфейс TypeScript
+const GlassCard = ({ children, className = '', onClick }: { children: React.ReactNode, className?: string, onClick?: () => void }) => (
+  <div 
+    onClick={onClick}
+    className={`bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-5 shadow-2xl ${className}`}
+  >
     {children}
   </div>
 );
@@ -42,8 +46,6 @@ export const Home = () => {
         peaceful: FishingEngine.calculate(wObj, 'peaceful'),
         predator: FishingEngine.calculate(wObj, 'predator')
       });
-      
-      // ВАЖНО: Передаем 4 аргумента!
       setLocation(lat, lon, cityName, auto);
       triggerHaptic('success');
     } catch (e) {
@@ -72,7 +74,6 @@ export const Home = () => {
 
   return (
     <div className="space-y-6 pt-[100px]">
-      {/* Фиксированная шапка */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-tg-bg/80 backdrop-blur-xl p-4 text-center border-b border-white/5">
         <h1 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-tg-link to-blue-400 leading-none">
           FISHTIME PRO
@@ -80,7 +81,6 @@ export const Home = () => {
         <p className="text-tg-hint text-[10px] mt-1 font-bold tracking-widest uppercase">Интеллектуальный прогноз</p>
       </div>
 
-      {/* Кликабельная локация */}
       <GlassCard 
         className="flex items-center justify-between active:scale-[0.98] transition-all cursor-pointer border-tg-link/20 shadow-[0_0_20px_rgba(0,242,254,0.1)]"
         onClick={() => { setIsSheetOpen(true); triggerHaptic('light'); }}
@@ -126,7 +126,6 @@ export const Home = () => {
             </GlassCard>
           </div>
 
-          {/* Карточки 2 в РЯД */}
           <div className="grid grid-cols-2 gap-3">
             <GlassCard className="border-b-4 border-b-fish-peaceful text-center flex flex-col items-center">
               <span className="text-[8px] text-fish-peaceful font-black uppercase mb-2">Мирная</span>
