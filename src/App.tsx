@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BottomNav } from '@/widgets/BottomNav';
 import { motion } from 'framer-motion';
 import { MapPin, Wind, Gauge, CloudRain } from 'lucide-react';
 import { useTelegram } from '@/shared/hooks/useTelegram';
@@ -19,6 +20,8 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [forecast, setForecast] = useState<{peaceful: any, predator: any} | null>(null);
+  const [activeTab, setActiveTab] = useState('home');
+
 
   const handleScan = () => {
     triggerHaptic('heavy');
@@ -174,6 +177,18 @@ export default function App() {
           </button>
         </motion.div>
       )}
+
+      <BottomNav 
+        activeTab={activeTab} 
+        setActiveTab={(tab) => {
+          setActiveTab(tab);
+          triggerHaptic('light');
+        }} 
+      />
+    </div>
+  );
+}
+
     </div>
   );
 }
